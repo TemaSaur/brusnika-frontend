@@ -1,10 +1,12 @@
 import FancyFont from "./FancyFont"
+import Image from "next/image"
 
 export default function LocationCard({name, src, div, emp}: {name: string, src: string, div: number, emp: number}) {
 	return <div className="flex flex-col items-center hover:scale-[1.02] hover:shadow-md hover:shadow-dark/10 cursor-pointer transition-all">
 		<FancyFont>
 			<div className="flex flex-col bg-grey">
-			<img src={src} />
+			<Image src={src} alt={name} width={302} height={160} />
+			
 			<div className="p-4">
 
 				<span className="text-xl text-center block">{name}</span>

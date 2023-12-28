@@ -1,31 +1,16 @@
+'use client'
+import {useState, useEffect} from 'react';
 import UnitList from '@/components/UnitList';
+import {get} from '@/util/request'
 
 export default function Divisions() {
-	const data = [
-		{
-			name: "Орион",
-			first: 23,
-			second: 78,
-		},
-		{
-			name: "Не Орион",
-			first: 32,
-			second: 102,
-		},
-		{
-			name: "Следующее",
-			first: 10,
-			second: 59,
-		},
-		{
-			name: "Без данных",
-		},
-		{
-			name: "Последнее",
-			first: 20,
-			second: 120,
-		},
-	];
+	const [data, setData] = useState<any[]>([])
+	useEffect(() => {
+		get('/structure/field', {field: 'subdivision'}).then(res => {
+			setData(res);
+			console.log(res)
+		});
+	}, [data.length])
 	return (
 		<main>
 			<div className="container mx-auto">
@@ -34,7 +19,8 @@ export default function Divisions() {
 					single="Подразделение"
 					firstName="отделов"
 					secondName="сотрудников"
-					data={data} />
+					data={data}
+					param="division"/>
 			</div>
 		</main>
 	);

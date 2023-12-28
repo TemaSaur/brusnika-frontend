@@ -1,19 +1,20 @@
 import FancyFont from '@/components/FancyFont'
 import UnitCard from '@/components/UnitCard'
 
-export default function UnitList({name, single, firstName, secondName, data}
-	: {name: string, single: string, firstName: string, secondName: string, data: any}) {
+export default function UnitList({name, single, firstName, secondName, data, param}
+	: {name: string, single: string, firstName: string, secondName: string, data: any, param: string}) {
 	return <div className="mt-16">
 		<h1 className="text-3xl mb-4">{name}</h1>
 		<div className="grid grid-cols-4 gap-8">
 			{data.map((unit: any) =>
 				<UnitCard
-					name={`${single} "${unit.name}"`}
+					name={unit}
 					firstName={firstName}
 					first={unit.first}
 					secondName={secondName}
 					second={unit.second}
-					key={unit.name}/>
+					key={unit.name}
+					param={param}/>
 			)}
 		</div>
 	</div>

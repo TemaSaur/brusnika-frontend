@@ -8,7 +8,6 @@ export default function Divisions() {
 	useEffect(() => {
 		get('/structure/field', {field: 'subdivision'}).then(res => {
 			setData(res);
-			console.log(res)
 		});
 	}, [data.length])
 	return (
@@ -17,10 +16,11 @@ export default function Divisions() {
 				<UnitList
 					name="Подразделения"
 					single="Подразделение"
-					firstName="отделов"
-					secondName="сотрудников"
+					firstName="сотрудников"
+					secondName="отделов"
 					data={data}
-					param="division"/>
+					param="subdivision"
+					subparam="department" />
 			</div>
 		</main>
 	);

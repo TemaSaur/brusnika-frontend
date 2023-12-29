@@ -1,60 +1,27 @@
+'use client'
+import {useState, useEffect} from 'react';
+import {get} from '@/util/request'
 import UnitList from '@/components/UnitList';
 
 export default function Departments() {
-	const data = [
-		{
-			name: 'Отдельный',
-			first: 5,
-			second: 30,
-		},
-		{
-			name: 'Не Орион',
-			first: 3,
-			second: 26,
-		},
-		{
-			name: 'Еще один',
-			first: 10,
-			second: 50,
-		},
-		{
-			name: 'Без данных',
-		},
-		{
-			name: 'Хороший',
-			first: 1,
-			second: 27,
-		},
-		{
-			name: 'Спортивный',
-			first: 20,
-			second: 180,
-		},
-		{
-			name: 'Орион',
-			first: 4,
-			second: 20
-		},
-		{
-			name: 'Дракон',
-			first: 5,
-			second: 36
-		},
-		{
-			name: 'Новый',
-			first: 4,
-			second: 87,
-		}
-	];
+	const [data, setData] = useState<any[]>([])
+
+	useEffect(() => {
+		get('/structure/get').then(res => {
+			setData(res.new_filters.department.filter((s: any) => s != 'not_specified'));
+		});
+	}, [data.length])
 	return (
 		<main>
 			<div className="container mx-auto">
 				<UnitList
 					name="Отделы"
 					single="Отдел"
-					firstName="групп"
-					secondName="сотрудников"
-					data={data} />
+					firstName="сотрудников"
+					secondName="групп"
+					data={data}
+					param="department"
+					subparam="group" />
 			</div>
 		</main>
 	);

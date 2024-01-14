@@ -5,6 +5,8 @@ import FilterChoice from '@/components/FilterChoice'
 import PeopleList from '@/components/PeopleList'
 
 export default function Staff() {
+	const [defaultFilters, setDefaultFilters] = useState<object>()
+	const [loaded, setLoaded] = useState<boolean>(false);
 	const [data, setData] = useState<any>({staff: [], filterValues: {}})
 	const locationRef = useRef<HTMLSelectElement>()
 	const subdivisionRef = useRef<HTMLSelectElement>()
@@ -12,19 +14,23 @@ export default function Staff() {
 	const groupRef = useRef<HTMLSelectElement>()
 
 	const getdefault = () => {
+		setLoaded(false);
 		get('/structure/get').then(data => {
 			const staff = data.employees.filter((p: any) => p.full_name != 'Вакансия');
 			const filterValues = data.new_filters;
-			setData({staff, filterValues: filterValues})
+			setData({staff, filterValues})
+			setLoaded(true);
 		})
 	}
 
 	useEffect(() => {
 		getdefault();
+		setDefaultFilters(data.filterValues)
 		
 	}, [data.length])
 
 	const reload = () => {
+		setLoaded(false);
 		const params: any = {}
 
 		if (locationRef.current!.value)
@@ -40,9 +46,14 @@ export default function Staff() {
 			params["group"] = groupRef.current!.value;
 
 		get('/structure/get', params).then(data => {
+			setLoaded(true);
+			if (!data.employees) {
+				setData({staff: null, filterValues: defaultFilters});
+				return;
+			}
 			const staff = data.employees.filter((p: any) => p.full_name != 'Вакансия');
 			const filterValues = data.new_filters;
-			setData({staff, filterValues: filterValues});
+			setData({staff, filterValues});
 		})
 	}
 
@@ -67,7 +78,11 @@ export default function Staff() {
 				</div>
 			</div>
 			<div className="container mx-auto">
-				<PeopleList data={data.staff}/>
+				{!loaded && <div className="mt-8 text-lg">Загрузка...</div>}
+				{loaded && !data.staff && <div className="mt-8 text-lg">Ничего не нашлось :(</div>}
+				{loaded && data.staff &&
+					<PeopleList data={data.staff}/>
+				}
 			</div>
 		</main>
 	)

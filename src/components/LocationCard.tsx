@@ -13,7 +13,6 @@ export default function LocationCard({name, src, div, emp}: {name: string, src: 
 				employees: res.employees.length,
 				divisions: res.new_filters.subdivision.length
 			});
-			console.log(res)
 		});
 	}, [data.employees, locationName])
 

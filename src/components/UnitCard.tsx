@@ -8,13 +8,11 @@ export default function LocationCard({name, firstName, first, secondName, second
 	useEffect(() => {
 		const params: any = {}
 		params[param] = name
-		console.log(params)
 		get('/structure/get', params).then(res => {
 			setData({
 				employees: res.employees.length,
 				sub: subparam? res.new_filters[subparam].length : 0
 			});
-			console.log(res)
 		});
 	}, [data.employees, name, param, subparam])
 

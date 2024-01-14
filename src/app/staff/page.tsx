@@ -15,7 +15,6 @@ export default function Staff() {
 		get('/structure/get').then(data => {
 			const staff = data.employees.filter((p: any) => p.full_name != 'Вакансия');
 			const filterValues = data.new_filters;
-			console.log(filterValues.location)
 			setData({staff, filterValues: filterValues})
 		})
 	}
@@ -26,9 +25,6 @@ export default function Staff() {
 	}, [data.length])
 
 	const reload = () => {
-		console.log(locationRef.current)
-		// console.log(Array.from(locationRef.current!.options).filter(opt => opt.selected).map(opt => opt.value))
-
 		const params: any = {}
 
 		if (locationRef.current!.value)
@@ -44,11 +40,9 @@ export default function Staff() {
 			params["group"] = groupRef.current!.value;
 
 		get('/structure/get', params).then(data => {
-			console.log(data)
 			const staff = data.employees.filter((p: any) => p.full_name != 'Вакансия');
 			const filterValues = data.new_filters;
-			console.log(filterValues.location)
-			setData({staff, filterValues: filterValues})
+			setData({staff, filterValues: filterValues});
 		})
 	}
 

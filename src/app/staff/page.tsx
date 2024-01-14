@@ -22,6 +22,13 @@ export default function Staff() {
 			setLoaded(true);
 		})
 	}
+	const reset = () => {
+		getdefault();
+		locationRef.current!.selectedIndex = -1;
+		subdivisionRef.current!.selectedIndex = -1;
+		departmentRef.current!.selectedIndex = -1;
+		groupRef.current!.selectedIndex = -1;
+	}
 
 	useEffect(() => {
 		getdefault();
@@ -72,7 +79,7 @@ export default function Staff() {
 						<button onClick={reload} className="px-4 py-1 ml-2 block border-dark border-1">Обновить</button>
 					</div>
 					<div className="my-auto">
-						<button onClick={getdefault} className="px-4 py-1 ml-2 block border-dark border-1">Сбросить</button>
+						<button onClick={reset} className="px-4 py-1 ml-2 block border-dark border-1">Сбросить</button>
 					</div>
 					
 				</div>
